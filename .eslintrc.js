@@ -1,10 +1,10 @@
 module.exports = {
   "env": {
-    "browser": true,
+    "browser": false,
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2017,
     "sourceType": "module",
     "ecmaFeatures": {}
   },
