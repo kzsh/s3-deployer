@@ -24,6 +24,10 @@ export default {
           }).deploy({
             source: 'testdir/foo/test.txt'
 
+          }).then(function(data) {
+            logger.info('READABLE:', data);
+          }).catch(function(err) {
+            logger.info('READABLE:', err);
           });
           logger.info('End program');
         }

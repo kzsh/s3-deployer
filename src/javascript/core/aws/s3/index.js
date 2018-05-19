@@ -10,26 +10,27 @@ export default class S3 {
   }
 
   uploadFile(filePath) {
-    logger.info(filePath);
-    const stream = fs.createReadStream(filePath);
+    return new Promise((resolve, reject) => {
+      logger.info(filePath);
+      const stream = fs.createReadStream(filePath);
 
-    stream.on('error', function(err) {
-      logger.error('File Read Stream:', err);
-    });
+      stream.on('error', function(err) {
+        reject(err);
+      });
 
-    // stream.on('end', () => {
-    //   console.log('end');
-    // });
+      const params = {
+        Bucket: this.bucket,
+        Key: 'fizz',
+        Body: stream
+      };
+      const uploader = this.service.upload(params);
 
-    const params = {
-      Bucket: this.bucket,
-      Key: 'fizz',
-      Body: stream
-    };
-    const uploader = this.service.upload(params);
-
-    uploader.send(function(err, data) {
-      logger.info('READABLE:', err, data);
+      uploader.send(function(err, data) {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
     });
   }
 }

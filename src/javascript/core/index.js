@@ -16,7 +16,7 @@ export default class Deployer {
     console.log('FILE:', source);
     console.log('BUCKET:', this.bucket);
     logger.debug('Upload to S3');
-    this.s3.uploadFile(source);
+    return this.s3.uploadFile(source);
   }
 }
 
