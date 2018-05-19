@@ -1,8 +1,6 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 
-import logger from 'javascript/logger';
-
 export default class S3 {
   constructor({ bucket }) {
     this.bucket = bucket;
@@ -11,7 +9,6 @@ export default class S3 {
 
   uploadFile(filePath) {
     return new Promise((resolve, reject) => {
-      logger.info(filePath);
       const stream = fs.createReadStream(filePath);
 
       stream.on('error', function(err) {
