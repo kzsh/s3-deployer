@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-require('javascript/cli').run();
+
+const { Cli } = require('../dist/deployer');
+Cli.run(process.argv);
