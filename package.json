@@ -1,5 +1,5 @@
 {
-  "name": "static-site-deployer",
+  "name": "@kzsh/static-site-deployer",
   "version": "0.0.1",
   "description": "Utility to deploy code to S3 and CloudFront.",
   "engines": {
