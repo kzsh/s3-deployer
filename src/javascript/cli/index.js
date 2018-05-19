@@ -1,8 +1,9 @@
-const yargs = require('yargs');
-const Deploy = require('javascript/core');
-const logger = require('javascript/logger');
+import { resolve } from 'path';
+import yargs from 'yargs';
+import Deployer from 'javascript/core';
+import logger from 'javascript/logger';
 
-module.exports = {
+export default {
   run() {
     yargs
       .command({
