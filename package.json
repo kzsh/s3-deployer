@@ -6,9 +6,6 @@
     "node": "~9.0",
     "npm": "~5.0"
   },
-  "bin": {
-    "deploy": "bin/deploy.js"
-  },
   "private": true,
   "dependencies": {
     "chalk": "^2.4.1",
@@ -29,6 +26,9 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.13"
+  },
+  "bin": {
+    "deploy": "./bin/deploy.js"
   },
   "scripts": {
     "build": "./node_modules/.bin/webpack --config ./config/webpack.js",
