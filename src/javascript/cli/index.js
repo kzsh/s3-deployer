@@ -1,22 +1,32 @@
-import { resolve } from 'path';
 import yargs from 'yargs';
 import Deployer from 'javascript/core';
 import logger from 'javascript/logger';
 
 export default {
   run() {
-    yargs
+    return yargs
       .command({
         command: '*',
-        builder(yargs) {
-          yargs.option('verbose', {
-            alias: 'v',
-            default: false
-          });
+        builder(optionsBuilder) {
+          optionsBuilder
+            .require('file', {
+              alias: 'f'
+            })
+            .option('verbose', {
+              alias: 'v',
+              default: false
+            });
         },
-        handler(argv) {
-          new Deploy();
+        handler() {
+          logger.info('Start program');
+          new Deployer({
+            bucket: 's3-deployer-test'
+          }).deploy({
+            source: 'testdir/foo/test.txt'
+
+          });
+          logger.info('End program');
         }
-      }).argv
+      }).argv;
   }
 };

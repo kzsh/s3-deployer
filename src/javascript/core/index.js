@@ -1,8 +1,23 @@
-const logger = require('javascript/logger');
+import CliLib from 'javascript/cli';
+import S3 from 'javascript/core/aws/s3';
+import logger from 'javascript/logger';
 
-export default class Deploy {
-  constructor() {
-    logger.info("here")
+export default class Deployer {
+  constructor({ bucket }) {
+    this.bucket = bucket;
+  }
 
+  deploy({source}) {
+    logger.debug('Initialize S3');
+    this.s3 = new S3({
+      bucket: this.bucket
+    });
+
+    console.log('FILE:', source);
+    consolt.log('BUCKET:', this.bucket);
+    logger.debug('Upload to S3');
+    this.s3.uploadFile(source);
   }
 }
+
+export const Cli = CliLib;

@@ -1,17 +1,17 @@
 const chalk = require('chalk');
-const { error, log, warn } = console;
+const { log } = console;
 
-module.exports = {
+export default {
   info: function() {
     log(chalk.cyan('INFO: ', ...arguments));
   },
 
   error: function() {
-    error(chalk.red('ERROR:', ...arguments));
+    log(chalk.red('ERROR:', ...arguments));
   },
 
   warn: function() {
-    warn(chalk.yellow('WARN: ', ...arguments));
+    log(chalk.yellow('WARN: ', ...arguments));
   },
 
   debug: function() {
@@ -19,6 +19,6 @@ module.exports = {
   },
 
   log: function() {
-    console.log('LOG: ', ...arguments);
+    log('LOG: ', ...arguments);
   }
 };
