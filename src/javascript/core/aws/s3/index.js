@@ -10,19 +10,13 @@ export default class S3 {
   uploadFile(filePath) {
     return new Promise((resolve, reject) => {
       const stream = fs.createReadStream(filePath);
+      stream.on('error', reject);
 
-      stream.on('error', function(err) {
-        reject(err);
-      });
-
-      const params = {
+      this.service.upload({
         Bucket: this.bucket,
-        Key: 'fizz',
+        Key: filePath,
         Body: stream
-      };
-      const uploader = this.service.upload(params);
-
-      uploader.send(function(err, data) {
+      }, function(err, data) {
         if (err) {
           reject(err);
         }
