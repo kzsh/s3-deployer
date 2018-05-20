@@ -34,14 +34,12 @@ export default {
           new Deployer({
             bucket: 's3-deployer-test'
           }).deploy({
-
             sources: buildGlob('dist/*')
           }).then(function(data) {
-            logger.info('READABLE:', data);
+            logger.debug(data);
           }).catch(function(err) {
-            logger.info('READABLE:', err);
+            logger.error(err);
           });
-          logger.info('End program');
         }
       }).argv;
   }
