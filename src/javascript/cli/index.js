@@ -1,6 +1,8 @@
 import glob from 'glob';
 import yargs from 'yargs';
+
 import Deployer from 'javascript/core';
+import environment from 'javascript/core/environment';
 import logger from 'javascript/logger';
 
 function buildGlob(pattern) {
@@ -23,13 +25,17 @@ export default {
           optionsBuilder
             .require('file', {
               alias: 'f'
+            .option('dry-run', {
+              alias: 'd',
+              default: false
             })
             .option('verbose', {
               alias: 'v',
               default: false
             });
         },
-        handler() {
+        handler(env) {
+          environment.initialize(env);
           logger.info('Start program');
           new Deployer({
             bucket: 's3-deployer-test'
