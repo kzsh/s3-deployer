@@ -1,29 +1,42 @@
 const { inspect } = require('util');
 const chalk = require('chalk');
-const { log } = console;
+const { error, log, warn } = console;
 
 function inspectArgumentObjects(...args) {
   return args.map(arg => (arg instanceof Object) ? inspect(arg) : arg);
 }
 
-export default {
-  info: function() {
-    log(chalk.cyan('INFO: ', ...arguments));
-  },
+const logLevels = [
+  'OFF',
+  'ERROR',
+  'NORMAL',
+  'DEBUG'
+];
 
+let logLevel = 2;
+
+export default {
   error: function() {
-    log(chalk.red('ERROR:', ...arguments));
+    if (logLevel < 1) { return; }
+    error(chalk.red('ERROR:', ...arguments));
   },
 
   warn: function() {
-    log(chalk.yellow('WARN: ', ...arguments));
+    if (logLevel < 2) { return; }
+    warn(chalk.yellow('WARN: ', ...arguments));
+  },
+
+  info: function() {
+    if (logLevel < 2) { return; }
+    log(chalk.cyan('INFO: ', ...arguments));
   },
 
   debug: function() {
+    if (logLevel < 3) { return; }
     log('DEBUG: ', ...inspectArgumentObjects(...arguments));
   },
 
-  log: function() {
-    log('LOG: ', ...arguments);
+  setLogLevel(level) {
+    logLevel = logLevels.indexOf(level.toUpperCase());
   }
 };
