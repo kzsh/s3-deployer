@@ -4,19 +4,23 @@ import logger from 'javascript/logger';
 
 export default class Deployer {
   constructor({ bucket }) {
+    logger.debug(`Initialize S3 with bucket: ${bucket}`);
     this.bucket = bucket;
-  }
-
-  deploy({source}) {
-    logger.debug('Initialize S3');
     this.s3 = new S3({
       bucket: this.bucket
     });
+  }
 
-    console.log('FILE:', source);
-    console.log('BUCKET:', this.bucket);
-    logger.debug('Upload to S3');
-    return this.s3.uploadFile(source);
+  deploy({ sources }) {
+    return sources.then(s => {
+
+      logger.debug(`Deploying:\n\t\t${s.join('\n\t\t')}`);
+      return Promise.all(
+        s.map(
+          this.s3.uploadFile.bind(this.s3)
+        )
+      );
+    });
   }
 }
 

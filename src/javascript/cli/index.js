@@ -1,6 +1,18 @@
+import glob from 'glob';
 import yargs from 'yargs';
 import Deployer from 'javascript/core';
 import logger from 'javascript/logger';
+
+function buildGlob(pattern) {
+  return new Promise(function(resolve, reject) {
+    glob(pattern, {}, function(err, files) {
+      if (err) {
+        reject(err);
+      }
+      resolve(files);
+    });
+  });
+}
 
 export default {
   run() {
@@ -22,8 +34,8 @@ export default {
           new Deployer({
             bucket: 's3-deployer-test'
           }).deploy({
-            source: 'testdir/foo/test.txt'
 
+            sources: buildGlob('dist/*')
           }).then(function(data) {
             logger.info('READABLE:', data);
           }).catch(function(err) {
