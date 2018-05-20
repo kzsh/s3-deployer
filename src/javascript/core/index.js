@@ -13,12 +13,9 @@ export default class Deployer {
 
   deploy({ sources }) {
     return sources.then(s => {
-
       logger.debug(`Deploying:\n\t\t${s.join('\n\t\t')}`);
       return Promise.all(
-        s.map(
-          this.s3.uploadFile.bind(this.s3)
-        )
+        s.map(this.s3.uploadFile.bind(this.s3))
       );
     });
   }
