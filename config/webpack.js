@@ -81,10 +81,7 @@ module.exports = {
           ]
         }
       }, {
-        loader: 'eslint-loader',
-        options: {
-          emitError: false
-        }
+        loader: 'eslint-loader'
       }]
     }]
   }
