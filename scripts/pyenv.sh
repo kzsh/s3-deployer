@@ -5,8 +5,9 @@ ROOT_DIR="$SCRIPT_DIR/../"
 configure_python_env() {
   if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
-    pyenv activate $(aws_environment)
-    export AWS_PROFILE=$(aws_environment)
+    pyenv activate "$(aws_environment)"
+    AWS_PROFILE=$(aws_environment)
+    export AWS_PROFILE
   else
     echo "Could not initialize pyenv"
     exit 1
@@ -14,5 +15,5 @@ configure_python_env() {
 }
 
 function aws_environment() {
-  cat $ROOT_DIR/.aws_environment
+  cat "$ROOT_DIR"/.aws_environment
 }
