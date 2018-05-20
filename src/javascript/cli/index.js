@@ -7,7 +7,9 @@ import logger from 'javascript/logger';
 
 function buildGlob(pattern) {
   return new Promise(function(resolve, reject) {
-    glob(pattern, {}, function(err, files) {
+    glob(pattern, {
+      nodir: true
+    }, function(err, files) {
       if (err) {
         reject(err);
       }
@@ -23,8 +25,16 @@ export default {
         command: '*',
         builder(optionsBuilder) {
           optionsBuilder
-            .require('file', {
-              alias: 'f'
+            .option('path', {
+              alias: 'p',
+              demandOption: true,
+              type: 'string'
+            })
+            .option('bucket', {
+              alias: 'b',
+              demandOption: true,
+              type: 'string'
+            })
             .option('dry-run', {
               alias: 'd',
               default: false
@@ -36,12 +46,19 @@ export default {
         },
         handler(env) {
           environment.initialize(env);
-          logger.setLogLevel('NORMAL');
+
+          if (environment.get('verbose')) {
+            logger.setLogLevel('DEBUG');
+
+          } else {
+            logger.setLogLevel('NORMAL');
+          }
+
           logger.info('Start program');
           new Deployer({
-            bucket: 's3-deployer-test'
+            bucket: env.bucket
           }).deploy({
-            sources: buildGlob('dist/*')
+            sources: buildGlob(env.path)
           }).then(function(data) {
             logger.debug(data);
           }).catch(function(err) {
