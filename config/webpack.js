@@ -13,6 +13,19 @@ const PATHS = {
 const APP_PATHS = [
   'javascript'
 ].reduce((appPaths, srcPath) => (appPaths[srcPath] = `${PATHS.src}/${srcPath}`) && appPaths, {});
+const plugins = [
+  new CleanWebpackPlugin([PATHS.dist], {
+    allowExternal: true
+  })
+];
+
+if (process.env.NODE_ENV === 'development') {
+  plugins.push(new UglifyJsPlugin({
+
+    // parallel: true,
+    // cache: true
+  }));
+}
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -48,12 +61,7 @@ module.exports = {
       commonjs2: 'util'
     }
   },
-  plugins: [
-    new CleanWebpackPlugin([PATHS.dist], {
-      allowExternal: true
-    }),
-    new UglifyJsPlugin()
-  ],
+  plugins: plugins,
   module: {
     rules: [{
       test: /\.js?$/,
