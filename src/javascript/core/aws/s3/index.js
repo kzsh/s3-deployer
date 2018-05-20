@@ -1,5 +1,7 @@
 import AWS from 'aws-sdk';
+import environment from 'javascript/core/environment';
 import fs from 'fs';
+import logger from 'javascript/logger';
 
 export default class S3 {
   constructor({ bucket }) {
@@ -9,6 +11,11 @@ export default class S3 {
 
   uploadFile(filePath) {
     return new Promise((resolve, reject) => {
+      if (environment.get('dry-run')) {
+        logger.info(`DRY-RUN: would have uploaded: ${filePath}`);
+        resolve(filePath);
+        return;
+      }
       const stream = fs.createReadStream(filePath);
       stream.on('error', reject);
 
