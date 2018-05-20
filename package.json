@@ -33,6 +33,8 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/webpack --config ./config/webpack.js",
+    "exec": "./node_modules/.bin/webpack --config ./config/webpack.js && ./bin/deploy.js",
+    "exec-debug": "./node_modules/.bin/webpack --config ./config/webpack.js && node inspect ./bin/deploy.js",
     "test": "jest"
   },
   "author": "andrew@hunt.li",
