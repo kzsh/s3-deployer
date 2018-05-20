@@ -36,6 +36,7 @@ export default {
         },
         handler(env) {
           environment.initialize(env);
+          logger.setLogLevel('NORMAL');
           logger.info('Start program');
           new Deployer({
             bucket: 's3-deployer-test'
