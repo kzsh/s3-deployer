@@ -1,5 +1,10 @@
+const { inspect } = require('util');
 const chalk = require('chalk');
 const { log } = console;
+
+function inspectArgumentObjects(...args) {
+  return args.map(arg => (arg instanceof Object) ? inspect(arg) : arg);
+}
 
 export default {
   info: function() {
@@ -15,7 +20,7 @@ export default {
   },
 
   debug: function() {
-    log('DEBUG: ', ...arguments);
+    log('DEBUG: ', ...inspectArgumentObjects(...arguments));
   },
 
   log: function() {
