@@ -19,6 +19,7 @@ export default class S3 {
       const stream = fs.createReadStream(filePath);
       stream.on('error', reject);
 
+      logger.info(`Uploading: ${filePath} to s3:${this.bucket}/${filePath} `);
       this.service.upload({
         Bucket: this.bucket,
         Key: filePath,
