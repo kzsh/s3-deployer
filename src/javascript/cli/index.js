@@ -5,9 +5,10 @@ import Deployer from 'javascript/core';
 import environment from 'javascript/core/environment';
 import logger from 'javascript/logger';
 
-function buildGlob(pattern) {
+function buildGlob({ pattern, root }) {
   return new Promise(function(resolve, reject) {
     glob(pattern, {
+      cwd: root || process.cwd(),
       nodir: true
     }, function(err, files) {
       if (err) {
@@ -28,6 +29,10 @@ export default {
             .option('path', {
               alias: 'p',
               demandOption: true,
+              type: 'string'
+            })
+            .option('root', {
+              alias: 'r',
               type: 'string'
             })
             .option('bucket', {
@@ -58,7 +63,7 @@ export default {
           new Deployer({
             bucket: env.bucket
           }).deploy({
-            sources: buildGlob(env.path)
+            sources: buildGlob({pattern: env.path, root: env.root})
           }).then(function(data) {
             logger.debug(data);
           }).catch(function(err) {

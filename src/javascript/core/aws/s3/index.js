@@ -12,14 +12,16 @@ export default class S3 {
   uploadFile(filePath) {
     return new Promise((resolve, reject) => {
       if (environment.get('dry-run')) {
-        logger.info(`DRY-RUN: would have uploaded: ${filePath}`);
+        logger.info(`DRY-RUN: would have uploaded: ${environment.get('root') || ''}${filePath} to ${filePath}`);
         resolve(filePath);
         return;
       }
+
       const stream = fs.createReadStream(filePath);
       stream.on('error', reject);
 
       logger.info(`Uploading: ${filePath} to s3:${this.bucket}/${filePath} `);
+
       this.service.upload({
         Bucket: this.bucket,
         Key: filePath,
