@@ -1,7 +1,7 @@
 {
-  "name": "@kzsh/static-site-deployer",
+  "name": "@kzsh/s3-deployer",
   "version": "0.0.1",
-  "description": "Utility to deploy code to S3 and CloudFront.",
+  "description": "Utility to deploy code to S3.",
   "main": "./dist/deployer.js",
   "engines": {
     "node": "~9.0",
