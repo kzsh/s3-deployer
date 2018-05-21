@@ -1,23 +1,8 @@
-import glob from 'glob';
 import yargs from 'yargs';
 
 import Deployer from 'javascript/core';
 import environment from 'javascript/core/environment';
 import logger from 'javascript/logger';
-
-function buildGlob({ pattern, root }) {
-  return new Promise(function(resolve, reject) {
-    glob(pattern, {
-      cwd: root || process.cwd(),
-      nodir: true
-    }, function(err, files) {
-      if (err) {
-        reject(err);
-      }
-      resolve(files);
-    });
-  });
-}
 
 export default {
   run() {
@@ -63,7 +48,8 @@ export default {
           new Deployer({
             bucket: env.bucket
           }).deploy({
-            sources: buildGlob({pattern: env.path, root: env.root})
+            sourceRoot: env.root,
+            sources: env.path
           }).then(function(data) {
             logger.debug(data);
           }).catch(function(err) {
